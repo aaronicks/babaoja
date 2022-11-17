@@ -186,6 +186,6 @@
    padding-top: 10px;
    text-align: center;
    position: relative;
-   overflow: hidden;
+   overflow: scroll;
    box-shadow:0 0 10px rgba(0, 0, 0, 0.1);
 }
