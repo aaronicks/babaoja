@@ -8,7 +8,12 @@
             <div class="flip-card-inner">
                 <!-- Front Side (Unchanged) -->
                 <div class="card flip-card-front h-100">
-                    <img class="card-img-top" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Product Image" />
+                    <div class="image-container">
+                        <img class="card-img-top zoomable" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Product Image" />
+                        <div class="zoom-icon" onclick="openImageModal('https://randomuser.me/api/portraits/men/75.jpg')">
+                            <i class="bi bi-zoom-in"></i>
+                        </div>
+                    </div>
                     <div class="card-body text-center">
                         <h5 class="fw-semi-bolder fs-5">Fancy Product</h5>
                         <p class="fs-6">$40.00 - $80.00</p>

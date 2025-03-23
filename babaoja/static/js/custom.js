@@ -38,3 +38,40 @@ function toggleSidebar() {
 }
 
 
+// for feedbacks
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".toggle-reply").forEach(button => {
+    button.addEventListener("click", function () {
+        let replyBox = this.nextElementSibling;
+        replyBox.classList.toggle("d-none");
+    });
+    });
+
+    document.getElementById("add-feedback").addEventListener("click", function () {
+    document.getElementById("feedback-form").classList.toggle("d-none");
+    });
+});
+
+
+
+
+// modal for zooming in 
+function openImageModal(imageSrc) {
+    // Get the modal elements
+    let modal = document.getElementById("imageModal");
+    let modalImg = document.getElementById("modalImage");
+
+    // Check if modal elements exist
+    if (modal && modalImg) {
+        modalImg.src = imageSrc; // Set the image source
+        modal.style.display = "block"; // Show the modal
+    } else {
+        console.error("Modal elements not found. Make sure the modal is included in the HTML.");
+    }
+}
+
+// Close modal function
+function closeModal() {
+    document.getElementById("imageModal").style.display = "none";
+}
+
