@@ -75,3 +75,7 @@ function closeModal() {
     document.getElementById("imageModal").style.display = "none";
 }
 
+// messages here
+$(document).ready(function () {
+    $("#messages-container").hide().slideDown(500).delay(3000).slideUp(500);
+});

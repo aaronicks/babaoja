@@ -1,81 +1,91 @@
-<!-- Navigation-->
 <!-- Upper Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light py-4">
+<nav class="navbar navbar-expand-lg navbar-light shadow-lg py-3" style="background: linear-gradient(135deg, rgba(34, 139, 34, 0.9), rgba(0, 0, 0, 0.9)); backdrop-filter: blur(10px);">
     <div class="container-fluid px-4 px-lg-5">
-        <a class="navbar-brand fw-bold" href="#!">babaoja</a>
-        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" 
+        <!-- Brand Name -->
+        <a class="navbar-brand fw-bold text-uppercase text-white" href="{% url 'home' %}" style="letter-spacing: 1px; font-size: 1.5rem;">
+            <i class="bi bi-shop-window"></i> Babaoja
+        </a>
+
+        <!-- Toggler Button -->
+        <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" 
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
             aria-expanded="false" aria-label="Toggle navigation">
-            <span class="toggler-icon"></span>
-            <span class="toggler-icon"></span>
-            <span class="toggler-icon"></span>
+            <i class="bi bi-list text-white fs-2"></i>
         </button>
 
-
-
+        <!-- Navbar Content -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active fw-semibold" href="#!">Home</a></li>
-                <li class="nav-item"><a class="nav-link fw-semibold" href="#!">About</a></li>
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link fw-semibold text-white" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link fw-semibold text-white" href="#!">About</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle fw-semibold" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle fw-semibold text-white" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown">
                         Shop
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item fw-semibold" href="#!">All Products</a></li>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#!">All Products</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item fw-semibold" href="#!">Popular Items</a></li>
-                        <li><a class="dropdown-item fw-semibold" href="#!">New Arrivals</a></li>
+                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
                     </ul>
                 </li>
             </ul>
 
             <!-- Right Side Icons -->
-            <div class="d-flex align-items-center">
-                <!-- Cart Icon -->
-                <a href="#!" class="btn btn-outline-dark me-3 position-relative">
+            <div class="d-flex align-items-center gap-3">
+                {% if request.user.is_authenticated %}
+                    <!-- Cart -->
+                <a href="#!" class="btn btn-outline-light position-relative rounded-pill">
                     <i class="bi bi-bag-check"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        3 <!-- Dynamic count -->
-                    </span>
+                    <span class="position-absolute top-0 start-100 translate-middle badge bg-danger">3</span>
                 </a>
-                <!-- Message/Chat Icon -->
-                <a href="#!" class="btn btn-outline-dark me-3 position-relative">
+
+                <!-- Messages -->
+                <a href="#!" class="btn btn-outline-light position-relative rounded-pill">
                     <i class="bi bi-chat-left-dots"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        5 <!-- Dynamic count -->
-                    </span>
+                    <span class="position-absolute top-0 start-100 translate-middle badge bg-danger">5</span>
                 </a>
-                <!-- Hotline Number -->
-                <span class="btn btn-outline-dark me-3">
+
+                <!-- Hotline -->
+                <span class="btn btn-outline-light rounded-pill">
                     <i class="bi bi-telephone-forward"></i>
                 </span>
-                <!-- Notification-->
-                <!-- Notification Icon with Counter -->
-                <span class="btn btn-outline-dark me-3 position-relative">
+
+                <!-- Notifications -->
+                <a href="#!" class="btn btn-outline-light position-relative rounded-pill">
                     <i class="bi bi-bell"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        7 <!-- Dynamic count -->
-                    </span>
-                </span>
+                    <span class="position-absolute top-0 start-100 translate-middle badge bg-danger">7</span>
+                </a>
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown">
-                        <img src="https://randomuser.me/api/portraits/men/50.jpg" alt="Profile" class="rounded-circle" width="40" height="40">
+                        <img src="https://randomuser.me/api/portraits/men/50.jpg" alt="Profile" class="rounded-circle border border-light" width="40" height="40">
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                        <li><a class="dropdown-item" href="#!">Profile</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="{% url 'my_profile' %}">Profile</a></li>
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="#!">Logout</a></li>
+                        <li><a class="dropdown-item text-danger" href="{% url 'user_logout' %}">Logout</a></li>
                     </ul>
                 </div>
+                {% else %}
+                <a href="{% url 'user_login' %}" class="btn btn-outline-light position-relative rounded-pill">
+                    Login 
+                    <i class="bi bi-box-arrow-in-right"></i>
+                </a>
+                <a href="{% url 'user_signup' %}" class="btn btn-outline-light position-relative rounded-pill">
+                    Register
+                    <i class="bi bi-person-plus"></i>
+                </a>
+                {% endif %}
+                <!-- Profile Dropdown -->
+                
             </div>
         </div>
     </div>
 </nav>
 
 <!-- Lower Navbar -->
-<nav class="navbar" style="background: linear-gradient(135deg, #228B22, #000000);">
+<nav class="navbar" style="background: linear-gradient(135deg, #228B22, #000000);z-index: -1;">
     <div class="container d-flex justify-content-center py-2">
         <a href="#!" class="text-white fw-bold mx-3">Sell on Babaoja</a>
         <span class="text-white mx-3">|</span>

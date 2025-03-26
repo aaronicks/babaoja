@@ -374,3 +374,69 @@ button.primary.ghost {
 }
 
  /* bio ends here */
+
+/* Login starts here */
+.babaoja-login {
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(360deg, #FFDB58, #228B22);
+}
+
+/* Login ends here */
+
+
+/* messages starts here */
+#messages-container {
+    position: fixed;
+    top: 10px; /* Adjust as needed */
+    right: 20px;
+    z-index: 1050; /* Ensure it's above other elements */
+    width: auto;
+    min-width: 250px;
+    max-width: 400px;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.9); /* Slight transparency */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slideDownFade 0.5s forwards, fadeOut 0.5s 3s forwards;
+}
+
+@keyframes slideDownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* messeages ends here */
+
+/* User Update form  */
+.input-box {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #28a745;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease-in-out;
+}
+
+.input-box:focus {
+    border-color: #218838;
+    background-color: #ffffff;
+    outline: none;
+    box-shadow: 0px 0px 10px rgba(33, 136, 56, 0.5);
+}
+
+/* User update form ends */

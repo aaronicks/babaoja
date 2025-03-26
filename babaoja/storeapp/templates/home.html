@@ -1,22 +1,33 @@
 {% extends 'base.html' %}
-
-
+{% load static %}
+{% load custom_filters %}
 {% block 'content' %}
+
+
+
+
+
 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    {% for product in products %}
     <div class="col-md-4 mb-5">
         <div class="flip-card">
             <div class="flip-card-inner">
                 <!-- Front Side (Unchanged) -->
                 <div class="card flip-card-front h-100">
                     <div class="image-container">
-                        <img class="card-img-top zoomable" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Product Image" />
+                        {% if product.image %}
+                            <img class="card-img-top zoomable" src="{{ product.image.url }}" alt="Product Image" />
+                        {% else %}
+                            <img class="card-img-top zoomable" src="{% static 'img/dummy.PNG' %}" alt="Product Image" />
+                        {% endif %}
                         <div class="zoom-icon" onclick="openImageModal('https://randomuser.me/api/portraits/men/75.jpg')">
                             <i class="bi bi-zoom-in"></i>
                         </div>
                     </div>
                     <div class="card-body text-center">
-                        <h5 class="fw-semi-bolder fs-5">Fancy Product</h5>
-                        <p class="fs-6">$40.00 - $80.00</p>
+                        <h5 class="fw-semi-bolder fs-6">{{product.name}}</h5>
+                        <p style="font-size:12px;">${{product.price}}</p>
+                        <small class="text-mute">{{product.description |truncate_words:3}}</small>
                     </div>
                     <div class="text-center" style="margin-bottom: 40px;">
                         <button class="btn btn-outline-dark mt-auto flip-btn view-btn">
@@ -28,18 +39,23 @@
                 <!-- Back Side (Vendor Profile) -->
                 <div class="card flip-card-back h-100">
                     <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                        <img class="vendor-img" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Vendor Image" />
-                        <h5 class="vendor-name">@John_Doe</h5>
+                        {% if product.user.profile.profile_images %}
+                            <img class="vendor-img" src="{{ product.user.profile.profile_images.url }}" alt="Vendor Image" />
+                        {% else %}
+                            <img class="vendor-img" src="{% static 'img/dummy.PNG' %}" alt="Vendor Image"/>
+                        {% endif %}
+                        <h5 class="vendor-name">@{{product.user.profile.user.username}}</h5>
                         <h6 class="vendor-location">
                             <i class="bi bi-geo-alt"></i>
-                            Ikeja, Lagos State
+                            {{product.user.profile.city}}, {{product.user.profile.state}}
                         </h6>
+                        
                         <div class="buttons">
                             <button class="primary">
-                                Details
+                                <a href="{% url 'user_profile' product.user.profile.user.id %} ">About</a>
                             </button>
                             <button class="primary ghost">
-                                Product
+                                <a href="{% url 'product_list' product.user.profile.user.id %} ">Catalogue</a>
                             </button>
                         </div>
                         <div class="buttons">
@@ -76,6 +92,9 @@
             </div>
         </div>
     </div>
+    {% empty %}
+    <h3>There No Products</h3>
+    {% endfor %}
     
     
     <div class="col-md-4 mb-5">
@@ -120,417 +139,5 @@
         </div>
     </div>
     
-    <div class="col-md-4 mb-5">
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <!-- Front Side (Unchanged) -->
-                <div class="card flip-card-front h-100">
-                    <img class="card-img-top" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Product Image" />
-                    <div class="card-body text-center">
-                        <h5 class="fw-semi-bolder fs-5">Fancy Product</h5>
-                        <p class="fs-6">$40.00 - $80.00</p>
-                    </div>
-                    <div class="text-center" style="margin-bottom: 40px;">
-                        <button class="btn btn-outline-dark mt-auto flip-btn view-btn">
-                            <i class="bi bi-binoculars-fill"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Back Side (Vendor Profile) -->
-                <div class="card flip-card-back h-100">
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                        <img class="vendor-img" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Vendor Image" />
-                        <h5 class="vendor-name">@John_Doe</h5>
-                        <h6 class="vendor-location">
-                            <i class="bi bi-geo-alt"></i>
-                            Ikeja, Lagos State
-                        </h6>
-                        <div class="buttons">
-                            <button class="primary">
-                                Details
-                            </button>
-                            <button class="primary ghost">
-                                Product
-                            </button>
-                        </div>
-                        <div class="buttons">
-                            <button class="primary">
-                                <i class="bi bi-telephone-forward-fill"></i>
-                            </button>
-                            <button class="primary">
-                                <i class="bi bi-chat-left-dots-fill"></i>
-                            </button>
-                        </div>
-                        <div class="socials">
-                            <a href="#" alt="facebook">
-                                <i class="bi bi-telephone-forward-fill"></i>
-                            </a>
-                            <a href="#" alt="facebook">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" alt="whatsapp">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
-                            <a href="#" alt="instagram">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                            <a href="#" alt="x-twitter">
-                                <i class="bi bi-twitter-x"></i>
-                            </a>                        
-                        </div>
-                        {% comment %} <p class="vendor-bio">Experienced seller providing top-quality products </p> {% endcomment %}
-                        <button class="btn btn-light mt-3 flip-btn back-btn">
-                            <i class="bi bi-arrow-left"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-5">
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <!-- Front Side (Unchanged) -->
-                <div class="card flip-card-front h-100">
-                    <img class="card-img-top" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Product Image" />
-                    <div class="card-body text-center">
-                        <h5 class="fw-semi-bolder fs-5">Fancy Product</h5>
-                        <p class="fs-6">$40.00 - $80.00</p>
-                    </div>
-                    <div class="text-center" style="margin-bottom: 40px;">
-                        <button class="btn btn-outline-dark mt-auto flip-btn view-btn">
-                            <i class="bi bi-binoculars-fill"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Back Side (Vendor Profile) -->
-                <div class="card flip-card-back h-100">
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                        <img class="vendor-img" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Vendor Image" />
-                        <h5 class="vendor-name">@John_Doe</h5>
-                        <h6 class="vendor-location">
-                            <i class="bi bi-geo-alt"></i>
-                            Ikeja, Lagos State
-                        </h6>
-                        <div class="buttons">
-                            <button class="primary">
-                                Details
-                            </button>
-                            <button class="primary ghost">
-                                Product
-                            </button>
-                        </div>
-                        <div class="buttons">
-                            <button class="primary">
-                                <i class="bi bi-telephone-forward-fill"></i>
-                            </button>
-                            <button class="primary">
-                                <i class="bi bi-chat-left-dots-fill"></i>
-                            </button>
-                        </div>
-                        <div class="socials">
-                            <a href="#" alt="facebook">
-                                <i class="bi bi-telephone-forward-fill"></i>
-                            </a>
-                            <a href="#" alt="facebook">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" alt="whatsapp">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
-                            <a href="#" alt="instagram">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                            <a href="#" alt="x-twitter">
-                                <i class="bi bi-twitter-x"></i>
-                            </a>                        
-                        </div>
-                        {% comment %} <p class="vendor-bio">Experienced seller providing top-quality products </p> {% endcomment %}
-                        <button class="btn btn-light mt-3 flip-btn back-btn">
-                            <i class="bi bi-arrow-left"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-5">
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <!-- Front Side (Unchanged) -->
-                <div class="card flip-card-front h-100">
-                    <img class="card-img-top" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Product Image" />
-                    <div class="card-body text-center">
-                        <h5 class="fw-semi-bolder fs-5">Fancy Product</h5>
-                        <p class="fs-6">$40.00 - $80.00</p>
-                    </div>
-                    <div class="text-center" style="margin-bottom: 40px;">
-                        <button class="btn btn-outline-dark mt-auto flip-btn view-btn">
-                            <i class="bi bi-binoculars-fill"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Back Side (Vendor Profile) -->
-                <div class="card flip-card-back h-100">
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                        <img class="vendor-img" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Vendor Image" />
-                        <h5 class="vendor-name">@John_Doe</h5>
-                        <h6 class="vendor-location">
-                            <i class="bi bi-geo-alt"></i>
-                            Ikeja, Lagos State
-                        </h6>
-                        <div class="buttons">
-                            <button class="primary">
-                                Details
-                            </button>
-                            <button class="primary ghost">
-                                Product
-                            </button>
-                        </div>
-                        <div class="buttons">
-                            <button class="primary">
-                                <i class="bi bi-telephone-forward-fill"></i>
-                            </button>
-                            <button class="primary">
-                                <i class="bi bi-chat-left-dots-fill"></i>
-                            </button>
-                        </div>
-                        <div class="socials">
-                            <a href="#" alt="facebook">
-                                <i class="bi bi-telephone-forward-fill"></i>
-                            </a>
-                            <a href="#" alt="facebook">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" alt="whatsapp">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
-                            <a href="#" alt="instagram">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                            <a href="#" alt="x-twitter">
-                                <i class="bi bi-twitter-x"></i>
-                            </a>                        
-                        </div>
-                        {% comment %} <p class="vendor-bio">Experienced seller providing top-quality products </p> {% endcomment %}
-                        <button class="btn btn-light mt-3 flip-btn back-btn">
-                            <i class="bi bi-arrow-left"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-5">
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <!-- Front Side (Unchanged) -->
-                <div class="card flip-card-front h-100">
-                    <img class="card-img-top" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Product Image" />
-                    <div class="card-body text-center">
-                        <h5 class="fw-semi-bolder fs-5">Fancy Product</h5>
-                        <p class="fs-6">$40.00 - $80.00</p>
-                    </div>
-                    <div class="text-center" style="margin-bottom: 40px;">
-                        <button class="btn btn-outline-dark mt-auto flip-btn view-btn">
-                            <i class="bi bi-binoculars-fill"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Back Side (Vendor Profile) -->
-                <div class="card flip-card-back h-100">
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                        <img class="vendor-img" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Vendor Image" />
-                        <h5 class="vendor-name">@John_Doe</h5>
-                        <h6 class="vendor-location">
-                            <i class="bi bi-geo-alt"></i>
-                            Ikeja, Lagos State
-                        </h6>
-                        <div class="buttons">
-                            <button class="primary">
-                                Details
-                            </button>
-                            <button class="primary ghost">
-                                Product
-                            </button>
-                        </div>
-                        <div class="buttons">
-                            <button class="primary">
-                                <i class="bi bi-telephone-forward-fill"></i>
-                            </button>
-                            <button class="primary">
-                                <i class="bi bi-chat-left-dots-fill"></i>
-                            </button>
-                        </div>
-                        <div class="socials">
-                            <a href="#" alt="facebook">
-                                <i class="bi bi-telephone-forward-fill"></i>
-                            </a>
-                            <a href="#" alt="facebook">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" alt="whatsapp">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
-                            <a href="#" alt="instagram">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                            <a href="#" alt="x-twitter">
-                                <i class="bi bi-twitter-x"></i>
-                            </a>                        
-                        </div>
-                        {% comment %} <p class="vendor-bio">Experienced seller providing top-quality products </p> {% endcomment %}
-                        <button class="btn btn-light mt-3 flip-btn back-btn">
-                            <i class="bi bi-arrow-left"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-5">
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <!-- Front Side (Unchanged) -->
-                <div class="card flip-card-front h-100">
-                    <img class="card-img-top" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Product Image" />
-                    <div class="card-body text-center">
-                        <h5 class="fw-semi-bolder fs-5">Fancy Product</h5>
-                        <p class="fs-6">$40.00 - $80.00</p>
-                    </div>
-                    <div class="text-center" style="margin-bottom: 40px;">
-                        <button class="btn btn-outline-dark mt-auto flip-btn view-btn">
-                            <i class="bi bi-binoculars-fill"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Back Side (Vendor Profile) -->
-                <div class="card flip-card-back h-100">
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                        <img class="vendor-img" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Vendor Image" />
-                        <h5 class="vendor-name">@John_Doe</h5>
-                        <h6 class="vendor-location">
-                            <i class="bi bi-geo-alt"></i>
-                            Ikeja, Lagos State
-                        </h6>
-                        <div class="buttons">
-                            <button class="primary">
-                                Details
-                            </button>
-                            <button class="primary ghost">
-                                Product
-                            </button>
-                        </div>
-                        <div class="buttons">
-                            <button class="primary">
-                                <i class="bi bi-telephone-forward-fill"></i>
-                            </button>
-                            <button class="primary">
-                                <i class="bi bi-chat-left-dots-fill"></i>
-                            </button>
-                        </div>
-                        <div class="socials">
-                            <a href="#" alt="facebook">
-                                <i class="bi bi-telephone-forward-fill"></i>
-                            </a>
-                            <a href="#" alt="facebook">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" alt="whatsapp">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
-                            <a href="#" alt="instagram">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                            <a href="#" alt="x-twitter">
-                                <i class="bi bi-twitter-x"></i>
-                            </a>                        
-                        </div>
-                        {% comment %} <p class="vendor-bio">Experienced seller providing top-quality products </p> {% endcomment %}
-                        <button class="btn btn-light mt-3 flip-btn back-btn">
-                            <i class="bi bi-arrow-left"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 mb-5">
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <!-- Front Side (Unchanged) -->
-                <div class="card flip-card-front h-100">
-                    <img class="card-img-top" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Product Image" />
-                    <div class="card-body text-center">
-                        <h5 class="fw-semi-bolder fs-5">Fancy Product</h5>
-                        <p class="fs-6">$40.00 - $80.00</p>
-                    </div>
-                    <div class="text-center" style="margin-bottom: 40px;">
-                        <button class="btn btn-outline-dark mt-auto flip-btn view-btn">
-                            <i class="bi bi-binoculars-fill"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Back Side (Vendor Profile) -->
-                <div class="card flip-card-back h-100">
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                        <img class="vendor-img" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Vendor Image" />
-                        <h5 class="vendor-name">@John_Doe</h5>
-                        <h6 class="vendor-location">
-                            <i class="bi bi-geo-alt"></i>
-                            Ikeja, Lagos State
-                        </h6>
-                        <div class="buttons">
-                            <button class="primary">
-                                Details
-                            </button>
-                            <button class="primary ghost">
-                                Product
-                            </button>
-                        </div>
-                        <div class="buttons">
-                            <button class="primary">
-                                <i class="bi bi-telephone-forward-fill"></i>
-                            </button>
-                            <button class="primary">
-                                <i class="bi bi-chat-left-dots-fill"></i>
-                            </button>
-                        </div>
-                        <div class="socials">
-                            <a href="#" alt="facebook">
-                                <i class="bi bi-telephone-forward-fill"></i>
-                            </a>
-                            <a href="#" alt="facebook">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" alt="whatsapp">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
-                            <a href="#" alt="instagram">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                            <a href="#" alt="x-twitter">
-                                <i class="bi bi-twitter-x"></i>
-                            </a>                        
-                        </div>
-                        {% comment %} <p class="vendor-bio">Experienced seller providing top-quality products </p> {% endcomment %}
-                        <button class="btn btn-light mt-3 flip-btn back-btn">
-                            <i class="bi bi-arrow-left"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 {% endblock %}

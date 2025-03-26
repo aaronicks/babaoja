@@ -16,16 +16,9 @@
                 {% else %}
                   <img class="img-fluid img-thumbnail mt-4 mb-2" src="{% static 'img/dummy.PNG' %}" alt="Product Image" style="width: 150px; z-index: 1"/>
                 {% endif %} 
-                
-                {% if profile.user.id == request.user.id %}
                 <a href="{% url 'update_user' %}" type="button" class="btn text-white" style="z-index: 1; background-color: #228B22;">
                   Edit profile
                 </a>
-                {% else %}
-                <a href="#!" type="button" class="btn text-white" style="z-index: 1; background-color: #228B22;">
-                  Contact
-                </a>
-                {% endif %}
               </div>
               <div class="ms-3" style="margin-top: 130px;">
                 <h5>{{profile.user.first_name}} {{profile.user.last_name}}</h5>
@@ -57,13 +50,17 @@
                 </div>
               <div class="d-flex justify-content-between align-items-center mb-4 text-body">
                 <p class="lead fw-normal mb-0">Products In Stock</p>
-                <p class="mb-0"><a href="{% url 'product_list' user_product.user.id %}" class="text-muted">Show all</a></p>
+                <p class="mb-0"><a href="{% url 'my_profile'  %}" class="text-muted">Show all</a></p>
               </div>
               <div class="row g-2">
                 {% for product in products %}
                   <div class="col mb-2">
                     <img src="{{product.image.url}}" alt="Our Product" class="w-100 rounded-3">
                   </div>
+                {% empty %}
+                <div class="col mb-2">
+                    <img class="w-100 rounded-3" src="{% static 'img/dummy.PNG' %}" alt="Our Product" />
+                </div>
                 {% endfor %}
                 <div class="col mb-2">
                   <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp" alt="image 1"
