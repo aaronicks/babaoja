@@ -334,6 +334,8 @@ button.primary.ghost {
     color: white;
 }
 
+
+
 /* Fixed Floating Button (Always Visible) */
 .sidebar-btn {
     position: fixed;
@@ -440,3 +442,46 @@ button.primary.ghost {
 }
 
 /* User update form ends */
+
+
+/* profile picture thumbnai */
+.img-thumbnail {
+    background-color: #FFDB58 !important;
+    border:1px solid #FFDB58 !important;
+
+}
+/* profile picture thumbnail ends */
+
+
+/* for product image */
+ /* Making vendor image perfectly round */
+ .vendor-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #ddd;
+}
+
+/* Making product image perfectly square */
+.product-image {
+    width: 300px; /* Make it square */
+    height: 300px; /* Make it square */
+    object-fit: cover;
+    border-radius: 0.5rem;
+    border: 3px solid #ddd;
+}
+
+/* <!-- Custom CSS for Green Arrows --> */
+
+.custom-prev .carousel-control-prev-icon,
+.custom-next .carousel-control-next-icon {
+    background-color: #228B22; /* Your Green Color */
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.carousel-indicators button {
+    background-color: #228B22; /* Your Green Color for Dots */
+}
+/* product page ends */

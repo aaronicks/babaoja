@@ -64,3 +64,16 @@ def create_profile(sender, created, instance, **kwargs):
         user_profile.save()
 
 post_save.connect(create_profile, sender=User)
+
+
+
+class Feedback(models.Model):
+    reviewer = models.ForeignKey(User, on_delete=models.CASCADE)  # The user giving feedback
+    reviewed_user = models.ForeignKey(User, related_name="received_feedback", on_delete=models.CASCADE)  # The user receiving feedback
+    feedbacks = models.TextField()
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name="replies")
+    rating = models.IntegerField(default=1, null=True, blank=True)  # Rating from 1 to 5
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Feedback from {self.reviewer} to {self.reviewed_user} - {self.rating} Stars"
